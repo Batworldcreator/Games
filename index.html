@@ -368,7 +368,8 @@
         const gameTitleDisplay = document.getElementById('current-game-title');
 
         function openGame(url, title) {
-            if (title === 'EvoWars.io') {
+            // Añadido 'Cubes 2048.io' aquí para que también se abra en pestaña nueva
+            if (title === 'EvoWars.io' || title === 'Cubes 2048.io') {
                 window.open(url, '_blank');
             } else {
                 mainMenu.style.display = 'none';
