@@ -55,7 +55,7 @@
             gap: 30px;
         }
 
-        /* Tarjeta de Juego Rediseñada con Imagen */
+        /* Tarjeta de Juego Rediseñada */
         .game-card {
             background-color: #1a1a1e;
             border-radius: 12px;
@@ -63,7 +63,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             border: 1px solid #2a2a30;
             display: flex;
-            flex-direction: row; /* Imagen a un lado e info al otro en pantallas grandes */
+            flex-direction: row;
             transition: transform 0.2s, border-color 0.2s;
         }
 
@@ -72,27 +72,28 @@
             transform: translateY(-2px);
         }
 
-        /* Contenedor de la foto de portada */
+        /* Contenedor de la foto de portada (Imágenes estables) */
         .game-cover-box {
             width: 240px;
             min-width: 240px;
             height: 160px;
             overflow: hidden;
             background-color: #000;
+            position: relative;
         }
 
         .game-cover-box img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ajusta la foto sin deformarla */
+            object-fit: cover;
             transition: transform 0.3s;
         }
 
         .game-card:hover .game-cover-box img {
-            transform: scale(1.05); /* Efecto zoom suave al pasar el ratón */
+            transform: scale(1.05);
         }
 
-        /* Contenedor del contenido (Texto y Botón) */
+        /* Detalles del Juego */
         .game-details {
             padding: 20px;
             display: flex;
@@ -125,7 +126,7 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 15px;
-            white-space: nowrap; /* Evita que el texto del botón se rompa en dos líneas */
+            white-space: nowrap;
             transition: background 0.2s, transform 0.1s;
         }
 
@@ -140,11 +141,11 @@
         /* Adaptación para pantallas pequeñas (Móviles / Tablets en vertical) */
         @media (max-width: 768px) {
             .game-card {
-                flex-direction: column; /* Apila la foto arriba y el texto abajo */
+                flex-direction: column;
             }
             .game-cover-box {
                 width: 100%;
-                height: 180px; /* Portada más ancha en móvil */
+                height: 180px;
             }
             .game-details {
                 flex-direction: column;
@@ -157,7 +158,9 @@
             }
         }
 
-        /* VISTA DEL JUEGO INDIVIDUAL */
+        /* =================================================== */
+        /* NUEVO DISEÑO: PANTALLA EXCLUSIVA CON BARRA SUPERIOR */
+        /* =================================================== */
         #game-view {
             display: none;
             position: fixed;
@@ -165,29 +168,36 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #000;
+            background-color: #121214;
             z-index: 9999;
+            flex-direction: column; /* Organiza la barra arriba y el juego abajo */
         }
 
-        /* Botón Casita (Home) */
+        /* Barra superior para el modo juego */
+        .game-top-bar {
+            width: 100%;
+            height: 60px;
+            background-color: #1a1a1e;
+            border-bottom: 2px solid #00ff88;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
         .btn-home {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: rgba(26, 26, 30, 0.85);
+            background-color: #2a2a30;
             color: #00ff88;
-            border: 2px solid #00ff88;
-            font-size: 24px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50px;
+            border: 1px solid #00ff88;
+            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            transition: background 0.2s, transform 0.1s;
-            z-index: 10000;
+            transition: background 0.2s;
         }
 
         .btn-home:hover {
@@ -195,13 +205,27 @@
             color: #121214;
         }
 
-        .btn-home:active {
-            transform: scale(0.9);
+        .game-title-display {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        /* Contenedor del juego que se adapta y permite scroll si es necesario */
+        .game-frame-wrapper {
+            flex: 1; /* Ocupa todo el espacio de pantalla restante */
+            width: 100%;
+            overflow: auto; /* Permite scroll si la web del juego lo pide */
+            -webkit-overflow-scrolling: touch; /* Suavidad en iPad/iOS */
         }
 
         .full-iframe {
             width: 100%;
             height: 100%;
+            min-height: 100%;
             border: none;
         }
 
@@ -231,40 +255,40 @@
             
             <article class="game-card">
                 <div class="game-cover-box">
-                    <img src="https://survev.io/img/logo.png" alt="Portada Survev.io">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=400&auto=format&fit=crop" alt="Survev.io">
                 </div>
                 <div class="game-details">
                     <div class="game-info">
                         <h3>Survev.io</h3>
                         <p>Un battle royale en 2D lleno de acción donde tienes que sobrevivir contra otros jugadores.</p>
                     </div>
-                    <button class="btn-play" onclick="openGame('https://survev.io/')">¡Cargar y Jugar!</button>
+                    <button class="btn-play" onclick="openGame('https://survev.io/', 'Survev.io')">¡Cargar y Jugar!</button>
                 </div>
             </article>
 
             <article class="game-card">
                 <div class="game-cover-box">
-                    <img src="https://taming.io/img/art/cover_art.jpg" alt="Portada Taming.io">
+                    <img src="https://images.unsplash.com/photo-1551103782-8ab07afd45c1?q=80&w=400&auto=format&fit=crop" alt="Taming.io">
                 </div>
                 <div class="game-details">
                     <div class="game-info">
                         <h3>Taming.io</h3>
                         <p>Sobrevive, consigue recursos y desvanece a tus enemigos con la ayuda de tus mascotas.</p>
                     </div>
-                    <button class="btn-play" onclick="openGame('https://taming.io/')">¡Cargar y Jugar!</button>
+                    <button class="btn-play" onclick="openGame('https://taming.io/', 'Taming.io')">¡Cargar y Jugar!</button>
                 </div>
             </article>
 
             <article class="game-card">
                 <div class="game-cover-box">
-                    <img src="https://bloxd.io/assets/texture/gui/social/logo.png" alt="Portada Bloxd.io">
+                    <img src="https://images.unsplash.com/photo-1605899435973-ca2d1a8861cf?q=80&w=400&auto=format&fit=crop" alt="Bloxd.io">
                 </div>
                 <div class="game-details">
                     <div class="game-info">
                         <h3>Bloxd.io</h3>
                         <p>Un juego multijugador estilo Minecraft con gráficos de bloques y varios modos de juego.</p>
                     </div>
-                    <button class="btn-play" onclick="openGame('https://bloxd.io/')">¡Cargar y Jugar!</button>
+                    <button class="btn-play" onclick="openGame('https://bloxd.io/', 'Bloxd.io')">¡Cargar y Jugar!</button>
                 </div>
             </article>
 
@@ -277,8 +301,13 @@
 
 
     <div id="game-view">
-        <button class="btn-home" onclick="closeGame()" title="Volver al menú">🏠</button>
-        <iframe id="game-iframe" class="full-iframe" src="about:blank" allowfullscreen></iframe>
+        <div class="game-top-bar">
+            <button class="btn-home" onclick="closeGame()" title="Volver al menú">🏠</button>
+            <div class="game-title-display" id="current-game-title">Juego</div>
+        </div>
+        <div class="game-frame-wrapper">
+            <iframe id="game-iframe" class="full-iframe" src="about:blank" allowfullscreen></iframe>
+        </div>
     </div>
 
 
@@ -286,10 +315,12 @@
         const mainMenu = document.getElementById('main-menu');
         const gameView = document.getElementById('game-view');
         const gameIframe = document.getElementById('game-iframe');
+        const gameTitleDisplay = document.getElementById('current-game-title');
 
-        function openGame(url) {
+        function openGame(url, title) {
             mainMenu.style.display = 'none';
-            gameView.style.display = 'block';
+            gameView.style.display = 'flex'; // Cambiado a flex para activar la barra superior organizada
+            gameTitleDisplay.textContent = title; // Muestra el nombre del juego arriba
             gameIframe.src = url;
         }
 
