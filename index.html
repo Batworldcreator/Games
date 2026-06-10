@@ -133,9 +133,9 @@
         .game-frame-container {
             position: relative;
             width: 100%;
-            height: 550px; /* Un poco más alto para mejor experiencia */
+            height: 550px;
             background-color: #000;
-            display: none; /* Oculto por defecto para mejorar rendimiento */
+            display: none; /* Ocultos al inicio */
         }
 
         iframe {
@@ -163,7 +163,7 @@
 
     <section class="hero">
         <h2>¡A jugar ahora mismo!</h2>
-        <p>Optimizado para cargar rápido. Elige tu juego y dale al botón para empezar.</p>
+        <p>Solo se puede tener un juego activo a la vez para garantizar el máximo rendimiento y sin lag.</p>
     </section>
 
     <main class="games-container">
@@ -223,25 +223,43 @@
     </footer>
 
     <script>
-        // Función para mostrar/ocultar el juego y cargarlo solo cuando sea necesario
-        function toggleGame(id) {
-            const container = document.getElementById('container-' + id);
-            const iframe = document.getElementById('iframe-' + id);
-            
-            if (container.style.display === 'block') {
-                container.style.display = 'none';
-            } else {
-                container.style.display = 'block';
-                // Si aún no se ha cargado la URL real, la asignamos ahora
-                if (iframe.src === 'about:blank' || iframe.src === window.location.href) {
-                    iframe.src = iframe.getAttribute('data-src');
+        // Lista con las IDs de todos los juegos para poder controlarlos en bucle
+        const listaJuegos = ['survev', 'taming', 'bloxd'];
+
+        function toggleGame(idSeleccionado) {
+            listaJuegos.forEach(id => {
+                const container = document.getElementById('container-' + id);
+                const iframe = document.getElementById('iframe-' + id);
+
+                if (id === idSeleccionado) {
+                    // Si es el juego que el usuario ha pulsado
+                    if (container.style.display === 'block') {
+                        // Si ya estaba abierto, lo cerramos y limpiamos el iframe para liberar memoria
+                        container.style.display = 'none';
+                        iframe.src = 'about:blank';
+                    } else {
+                        // Si estaba cerrado, lo mostramos y cargamos su juego
+                        container.style.display = 'block';
+                        iframe.src = iframe.getAttribute('data-src');
+                    }
+                } else {
+                    // Para todos los DEMÁS juegos: los ocultamos y reseteamos su contenido por si acaso estaban corriendo de fondo
+                    container.style.display = 'none';
+                    iframe.src = 'about:blank';
                 }
-            }
+            });
         }
 
-        // Función para poner el juego en pantalla completa nativa del navegador
+        // Función para poner el juego en pantalla completa
         function openFullscreen(iframeId) {
             const elem = document.getElementById(iframeId);
+            
+            // Verificamos primero que el iframe no esté vacío (about:blank) antes de pasarlo a pantalla completa
+            if (elem.src === 'about:blank' || elem.src === window.location.href) {
+                alert("¡Primero debes hacer clic en '¡Cargar y Jugar!' antes de poner la pantalla completa!");
+                return;
+            }
+
             if (elem.requestFullscreen) {
                 elem.requestFullscreen();
             } else if (elem.webkitRequestFullscreen) { /* Safari */
