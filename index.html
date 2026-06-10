@@ -52,7 +52,7 @@
 
         /* Contenedor de Juegos */
         .games-container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
             display: flex;
@@ -60,7 +60,7 @@
             gap: 40px;
         }
 
-        /* Tarjeta de Juego Especial para Jugar */
+        /* Tarjeta de Juego */
         .game-card {
             background-color: #1a1a1e;
             border-radius: 12px;
@@ -69,15 +69,22 @@
             border: 1px solid #2a2a30;
             display: flex;
             flex-direction: column;
+            transition: transform 0.2s;
         }
 
         .game-card:hover {
             border-color: #00ff88;
+            transform: translateY(-2px);
         }
 
-        .game-info {
+        .game-header {
             padding: 20px;
             background-color: #1a1a1e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .game-info h3 {
@@ -91,12 +98,44 @@
             font-size: 14px;
         }
 
+        /* Botones de Control */
+        .btn {
+            background-color: #00ff88;
+            color: #121214;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background-color: #00cc6e;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-fullscreen {
+            background-color: #2a2a30;
+            color: #fff;
+            margin-left: 10px;
+        }
+
+        .btn-fullscreen:hover {
+            background-color: #3a3a42;
+        }
+
         /* Contenedor del Juego (Pantalla) */
         .game-frame-container {
             position: relative;
             width: 100%;
-            height: 500px; /* Altura ideal para jugar en iPad */
+            height: 550px; /* Un poco más alto para mejor experiencia */
             background-color: #000;
+            display: none; /* Oculto por defecto para mejorar rendimiento */
         }
 
         iframe {
@@ -124,38 +163,56 @@
 
     <section class="hero">
         <h2>¡A jugar ahora mismo!</h2>
-        <p>Disfruta de tus tres juegos .io favoritos directamente desde esta página.</p>
+        <p>Optimizado para cargar rápido. Elige tu juego y dale al botón para empezar.</p>
     </section>
 
     <main class="games-container">
         
         <article class="game-card">
-            <div class="game-info">
-                <h3>Survev.io</h3>
-                <p>Un battle royale en 2D lleno de acción donde tienes que sobrevivir contra otros jugadores.</p>
+            <div class="game-header">
+                <div class="game-info">
+                    <h3>Survev.io</h3>
+                    <p>Un battle royale en 2D lleno de acción donde tienes que sobrevivir contra otros jugadores.</p>
+                </div>
+                <div>
+                    <button class="btn" onclick="toggleGame('survev')">¡Cargar y Jugar!</button>
+                    <button class="btn btn-fullscreen" onclick="openFullscreen('iframe-survev')">⛶ Pantalla Completa</button>
+                </div>
             </div>
-            <div class="game-frame-container">
-                <iframe src="https://survev.io/" allowfullscreen></iframe>
-            </div>
-        </article>
-
-        <article class="game-card">
-            <div class="game-info">
-                <h3>Taming.io</h3>
-                <p>Sobrevive, consigue recursos y desvanece a tus enemigos con la ayuda de tus mascotas salvajes.</p>
-            </div>
-            <div class="game-frame-container">
-                <iframe src="https://taming.io/" allowfullscreen></iframe>
+            <div class="game-frame-container" id="container-survev">
+                <iframe id="iframe-survev" src="about:blank" data-src="https://survev.io/" allowfullscreen></iframe>
             </div>
         </article>
 
         <article class="game-card">
-            <div class="game-info">
-                <h3>Bloxd.io</h3>
-                <p>Un juego multijugador estilo Minecraft con gráficos de bloques y varios modos de juego divertidos.</p>
+            <div class="game-header">
+                <div class="game-info">
+                    <h3>Taming.io</h3>
+                    <p>Sobrevive, consigue recursos y desvanece a tus enemigos con la ayuda de tus mascotas.</p>
+                </div>
+                <div>
+                    <button class="btn" onclick="toggleGame('taming')">¡Cargar y Jugar!</button>
+                    <button class="btn btn-fullscreen" onclick="openFullscreen('iframe-taming')">⛶ Pantalla Completa</button>
+                </div>
             </div>
-            <div class="game-frame-container">
-                <iframe src="https://bloxd.io/" allowfullscreen></iframe>
+            <div class="game-frame-container" id="container-taming">
+                <iframe id="iframe-taming" src="about:blank" data-src="https://taming.io/" allowfullscreen></iframe>
+            </div>
+        </article>
+
+        <article class="game-card">
+            <div class="game-header">
+                <div class="game-info">
+                    <h3>Bloxd.io</h3>
+                    <p>Un juego multijugador estilo Minecraft con gráficos de bloques y varios modos de juego.</p>
+                </div>
+                <div>
+                    <button class="btn" onclick="toggleGame('bloxd')">¡Cargar y Jugar!</button>
+                    <button class="btn btn-fullscreen" onclick="openFullscreen('iframe-bloxd')">⛶ Pantalla Completa</button>
+                </div>
+            </div>
+            <div class="game-frame-container" id="container-bloxd">
+                <iframe id="iframe-bloxd" src="about:blank" data-src="https://bloxd.io/" allowfullscreen></iframe>
             </div>
         </article>
 
@@ -164,6 +221,36 @@
     <footer>
         <p>&copy; 2026 Mi Zona Gamer. Tus juegos .io en un solo lugar.</p>
     </footer>
+
+    <script>
+        // Función para mostrar/ocultar el juego y cargarlo solo cuando sea necesario
+        function toggleGame(id) {
+            const container = document.getElementById('container-' + id);
+            const iframe = document.getElementById('iframe-' + id);
+            
+            if (container.style.display === 'block') {
+                container.style.display = 'none';
+            } else {
+                container.style.display = 'block';
+                // Si aún no se ha cargado la URL real, la asignamos ahora
+                if (iframe.src === 'about:blank' || iframe.src === window.location.href) {
+                    iframe.src = iframe.getAttribute('data-src');
+                }
+            }
+        }
+
+        // Función para poner el juego en pantalla completa nativa del navegador
+        function openFullscreen(iframeId) {
+            const elem = document.getElementById(iframeId);
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+        }
+    </script>
 
 </body>
 </html>
