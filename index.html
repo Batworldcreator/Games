@@ -342,10 +342,14 @@
         const gameTitleDisplay = document.getElementById('current-game-title');
 
         function openGame(url, title) {
-            mainMenu.style.display = 'none';
-            gameView.style.display = 'flex';
-            gameTitleDisplay.textContent = title;
-            gameIframe.src = url;
+            if (title === 'EvoWars.io') {
+                window.open(url, '_blank');
+            } else {
+                mainMenu.style.display = 'none';
+                gameView.style.display = 'flex';
+                gameTitleDisplay.textContent = title;
+                gameIframe.src = url;
+            }
         }
 
         function closeGame() {
