@@ -177,4 +177,128 @@
             background-color: rgba(26, 26, 30, 0.85);
             color: #00ff88;
             border: 2px solid #00ff88;
-            font-size:
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: background 0.2s, transform 0.1s;
+            z-index: 10000;
+        }
+
+        .btn-home:hover {
+            background-color: #00ff88;
+            color: #121214;
+        }
+
+        .btn-home:active {
+            transform: scale(0.9);
+        }
+
+        .full-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Pie de página */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #1a1a1e;
+            color: #666;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-menu">
+        <header>
+            <h1>🎮 Mi Zona Gamer</h1>
+        </header>
+
+        <section class="hero">
+            <h2>¡A jugar ahora mismo!</h2>
+        </section>
+
+        <main class="games-container">
+            
+            <article class="game-card">
+                <div class="game-cover-box">
+                    <img src="https://survev.io/img/logo.png" alt="Portada Survev.io">
+                </div>
+                <div class="game-details">
+                    <div class="game-info">
+                        <h3>Survev.io</h3>
+                        <p>Un battle royale en 2D lleno de acción donde tienes que sobrevivir contra otros jugadores.</p>
+                    </div>
+                    <button class="btn-play" onclick="openGame('https://survev.io/')">¡Cargar y Jugar!</button>
+                </div>
+            </article>
+
+            <article class="game-card">
+                <div class="game-cover-box">
+                    <img src="https://taming.io/img/art/cover_art.jpg" alt="Portada Taming.io">
+                </div>
+                <div class="game-details">
+                    <div class="game-info">
+                        <h3>Taming.io</h3>
+                        <p>Sobrevive, consigue recursos y desvanece a tus enemigos con la ayuda de tus mascotas.</p>
+                    </div>
+                    <button class="btn-play" onclick="openGame('https://taming.io/')">¡Cargar y Jugar!</button>
+                </div>
+            </article>
+
+            <article class="game-card">
+                <div class="game-cover-box">
+                    <img src="https://bloxd.io/assets/texture/gui/social/logo.png" alt="Portada Bloxd.io">
+                </div>
+                <div class="game-details">
+                    <div class="game-info">
+                        <h3>Bloxd.io</h3>
+                        <p>Un juego multijugador estilo Minecraft con gráficos de bloques y varios modos de juego.</p>
+                    </div>
+                    <button class="btn-play" onclick="openGame('https://bloxd.io/')">¡Cargar y Jugar!</button>
+                </div>
+            </article>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Mi Zona Gamer. Tus juegos .io en un solo lugar.</p>
+        </footer>
+    </div>
+
+
+    <div id="game-view">
+        <button class="btn-home" onclick="closeGame()" title="Volver al menú">🏠</button>
+        <iframe id="game-iframe" class="full-iframe" src="about:blank" allowfullscreen></iframe>
+    </div>
+
+
+    <script>
+        const mainMenu = document.getElementById('main-menu');
+        const gameView = document.getElementById('game-view');
+        const gameIframe = document.getElementById('game-iframe');
+
+        function openGame(url) {
+            mainMenu.style.display = 'none';
+            gameView.style.display = 'block';
+            gameIframe.src = url;
+        }
+
+        function closeGame() {
+            gameView.style.display = 'none';
+            mainMenu.style.display = 'block';
+            gameIframe.src = 'about:blank';
+        }
+    </script>
+
+</body>
+</html>
